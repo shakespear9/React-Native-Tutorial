@@ -72,48 +72,116 @@ const App: () => Node = () => {
   };
 
   return (
-    <View style={container}>
-      {/* <Text style={styles.text}>My name is {name}</Text>
-      <Text style={styles.text}>
-        This is session number {session.number} and about {session.title}
-      </Text>
-      <Text style={styles.text}>
-        {current ? 'current sesssion' : 'next session'}
-      </Text>
-      <Button title="Update State" onPress={onClickHandle}></Button> */}
+    <View style={styles.body}>
+      <View style={styles.viewTop}>
+        <View style={styles.view1}>
+          <Text style={styles.text}>1</Text>
+        </View>
 
-      <Text style={styles.text}>{countNumber}</Text>
-
-      <View style={styles.button}>
-        <Button title="ADD" onPress={onAddHandle}></Button>
+        <View style={styles.view2}>
+          <Text style={styles.text}>2</Text>
+        </View>
+        <View style={styles.view3}>
+          <Text style={styles.text}>3</Text>
+        </View>
       </View>
-      <Text style={styles.text}>You clicked {countClick} times</Text>
+
+      <View style={styles.viewMiddle}>
+        <View style={styles.view4}>
+          <Text style={styles.text}>4</Text>
+        </View>
+      </View>
+      <View style={styles.viewMiddle}>
+        <View style={styles.view5}>
+          <Text style={styles.text}>5</Text>
+        </View>
+      </View>
+
+      <View style={styles.viewBottom}>
+        <View style={styles.view6}>
+          <Text style={styles.text}>6</Text>
+        </View>
+        <View style={styles.view7}>
+          <Text style={styles.text}>7</Text>
+        </View>
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   body: {
-    // flex: 1,
-    width: '100%',
-    height: '50%',
-    backgroundColor: '#ffffff',
-    alignItems: 'center', // Center Horizontally
-    justifyContent: 'center', // Center Vertically
-    borderWidth: 10,
-    borderColor: '#ff00ff',
-    borderRadius: 10,
+    flex: 1,
+    backgroundColor: '#fff54f',
+    flexDirection: 'column',
+    alignItems: 'stretch', // Center Horizontally
+    justifyContent: 'flex-start', // Center Vertically
   },
+
+  viewTop: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  viewMiddle: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  viewBottom: {
+    flexDirection: 'row',
+    flex: 1,
+    alignItems: 'stretch',
+    justifyContent: 'center',
+  },
+  view1: {
+    flex: 1,
+    backgroundColor: '#000fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  view2: {
+    flex: 2,
+    backgroundColor: '#009999',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  view3: {
+    flex: 3,
+    backgroundColor: '#fffabc',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  view4: {
+    flex: 1,
+    backgroundColor: '#ff1234',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  view5: {
+    flex: 1,
+    backgroundColor: '#ff34ed',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  view6: {
+    flex: 1,
+    backgroundColor: '#fedf12',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  view7: {
+    flex: 1,
+    backgroundColor: '#15456f',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
   text: {
     color: '#000000',
     fontSize: 20,
     fontStyle: 'italic',
     margin: 10,
-    textTransform: 'capitalize',
-  },
-  button: {
-    width: 150,
-    height: 60,
   },
 });
 
