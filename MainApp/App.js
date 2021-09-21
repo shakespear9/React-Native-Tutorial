@@ -64,7 +64,7 @@ const App: () => Node = () => {
     setCountNumber(prevCount => {
       return (prevCount += 5);
     });
-    setCountClick(prevState => (prevState = 5));
+    setCountClick(prevState => prevState + 1);
   };
 
   const backgroundStyle = {
@@ -72,7 +72,7 @@ const App: () => Node = () => {
   };
 
   return (
-    <View style={styles.body}>
+    <View style={container}>
       {/* <Text style={styles.text}>My name is {name}</Text>
       <Text style={styles.text}>
         This is session number {session.number} and about {session.title}
@@ -83,7 +83,10 @@ const App: () => Node = () => {
       <Button title="Update State" onPress={onClickHandle}></Button> */}
 
       <Text style={styles.text}>{countNumber}</Text>
-      <Button title="ADD" onPress={onAddHandle}></Button>
+
+      <View style={styles.button}>
+        <Button title="ADD" onPress={onAddHandle}></Button>
+      </View>
       <Text style={styles.text}>You clicked {countClick} times</Text>
     </View>
   );
@@ -91,17 +94,35 @@ const App: () => Node = () => {
 
 const styles = StyleSheet.create({
   body: {
-    flex: 1,
+    // flex: 1,
+    width: '100%',
+    height: '50%',
     backgroundColor: '#ffffff',
     alignItems: 'center', // Center Horizontally
     justifyContent: 'center', // Center Vertically
+    borderWidth: 10,
+    borderColor: '#ff00ff',
+    borderRadius: 10,
   },
   text: {
     color: '#000000',
     fontSize: 20,
     fontStyle: 'italic',
     margin: 10,
+    textTransform: 'capitalize',
+  },
+  button: {
+    width: 150,
+    height: 60,
   },
 });
+
+const styles2 = StyleSheet.create({
+  body2: {
+    backgroundColor: '#000000',
+  },
+});
+
+const container = StyleSheet.compose(styles.body, styles2.body2);
 
 export default App;
