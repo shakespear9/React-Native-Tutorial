@@ -22,6 +22,8 @@ import {
   Alert,
   ToastAndroid,
   Modal,
+  Image,
+  ImageBackground,
 } from 'react-native';
 
 import {Colors} from 'react-native/Libraries/NewAppScreen';
@@ -71,7 +73,11 @@ const App: () => Node = () => {
   };
 
   return (
-    <View style={styles.body}>
+    <ImageBackground
+      style={styles.body}
+      source={{
+        uri: 'https://cdn.pixabay.com/photo/2015/03/27/00/09/puzzle-693870_960_720.jpg',
+      }}>
       <Modal
         visible={showWarning}
         onRequestClose={() => setShowWarning(false)}
@@ -108,34 +114,6 @@ const App: () => Node = () => {
         showSoftInputOnFocus={false}
         numberOfLines={1}
         multiline={false}></TextInput>
-      {/* 
-      <Button
-        title={submiited ? 'Clear' : 'Submit'}
-        onPress={onPressHandler}
-        disabled={false}
-        color="#00f"
-      /> */}
-
-      {/* <TouchableOpacity
-        onPress={onPressHandler}
-        style={styles.button}
-        activeOpacity={0.2}>
-        <Text style={styles.text}>{submiited ? 'Clear' : 'Submit'}</Text>
-      </TouchableOpacity> */}
-
-      {/* <TouchableHighlight
-        onPress={onPressHandler}
-        style={styles.button}
-        activeOpacity={0.2}
-        underlayColor="#dddddd">
-        <Text style={styles.text}>{submiited ? 'Clear' : 'Submit'}</Text>
-      </TouchableHighlight> */}
-
-      {/* <TouchableWithoutFeedback onPress={onPressHandler} style={styles.button}>
-        <View style={styles.button}>
-          <Text style={styles.text}>{submiited ? 'Clear' : 'Submit'}</Text>
-        </View>
-      </TouchableWithoutFeedback> */}
 
       <Pressable
         onPress={onPressHandler}
@@ -150,9 +128,25 @@ const App: () => Node = () => {
       </Pressable>
 
       {submiited ? (
-        <Text style={styles.text}> You register as {name}</Text>
-      ) : null}
-    </View>
+        <View style={styles.centered_view}>
+          <Text style={styles.text}> You register as {name}</Text>
+          <Image
+            style={styles.image}
+            source={{
+              uri: 'https://cdn.pixabay.com/photo/2013/07/13/10/33/cross-157492_960_720.png',
+            }}
+            resizeMode="center"
+            blurRadius={1}
+          />
+        </View>
+      ) : (
+        <Image
+          style={styles.image}
+          source={require('./assets/cancel.png')}
+          resizeMode="stretch"
+        />
+      )}
+    </ImageBackground>
   );
 };
 
@@ -218,6 +212,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#00ffff',
     borderBottomLeftRadius: 10,
     borderBottomRightRadius: 10,
+  },
+  image: {
+    width: 100,
+    height: 100,
+    margin: 10,
   },
 });
 
