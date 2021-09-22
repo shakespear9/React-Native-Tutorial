@@ -19,6 +19,8 @@ import {
   TouchableHighlight,
   TouchableWithoutFeedback,
   Pressable,
+  Alert,
+  ToastAndroid,
 } from 'react-native';
 
 import {Colors} from 'react-native/Libraries/NewAppScreen';
@@ -59,7 +61,41 @@ const App: () => Node = () => {
   const [submiited, setSubmitted] = useState(false);
 
   const onPressHandler = () => {
-    setSubmitted(!submiited);
+    if (name.length > 3) {
+      setSubmitted(!submiited);
+    } else {
+      //   Alert.alert(
+      //     'Warning',
+      //     'The name must be longer than 3 characters',
+      //     [
+      //       {
+      //         text: 'Do not show again',
+      //         onPress: () => console.warn('Do not show again!'),
+      //         style: 'default',
+      //       },
+      //       {
+      //         text: 'Cancel',
+      //         onPress: () => console.warn('Cancel Pressed!'),
+      //         style: 'default',
+      //       },
+      //       {
+      //         text: 'OK',
+      //         onPress: () => console.warn('OK Pressed!'),
+      //         style: 'default',
+      //       },
+      //     ],
+      //     {cancelable: true, onDismiss: () => console.warn('Dismiss')},
+      //   );
+      // }
+
+      ToastAndroid.showWithGravityAndOffset(
+        'The name must be longer than 3 characters',
+        ToastAndroid.LONG,
+        ToastAndroid.TOP,
+        100,
+        200,
+      );
+    }
   };
 
   return (
@@ -109,7 +145,7 @@ const App: () => Node = () => {
         onPress={onPressHandler}
         // onLongPress={onPressHandler}
         hitSlop={{top: 10, bottom: 10, right: 10, left: 10}}
-        // delayLongPress={10000}
+        // delayLongPress={2000}
         android_ripple={{color: '#00f'}}
         style={({pressed}) => (
           [styles.button], {backgroundColor: pressed ? '#00ff00' : '#123fff'}
