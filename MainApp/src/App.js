@@ -27,6 +27,8 @@ import {
 } from 'react-native';
 
 import {Colors} from 'react-native/Libraries/NewAppScreen';
+import LeenButton from './CustomButton';
+import Header from './Header';
 
 const Section = ({children, title}): Node => {
   const isDarkMode = useColorScheme() === 'dark';
@@ -61,15 +63,19 @@ const App: () => Node = () => {
   };
 
   const [name, setName] = useState('');
-  const [submiited, setSubmitted] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
   const [showWarning, setShowWarning] = useState(false);
 
   const onPressHandler = () => {
     if (name.length > 3) {
-      setSubmitted(!submiited);
+      setSubmitted(!submitted);
     } else {
       setShowWarning(true);
     }
+  };
+
+  const onTestHandler = () => {
+    console.warn('Test Pressed!');
   };
 
   return (
@@ -78,6 +84,8 @@ const App: () => Node = () => {
       source={{
         uri: 'https://cdn.pixabay.com/photo/2015/03/27/00/09/puzzle-693870_960_720.jpg',
       }}>
+      <Header />
+
       <Modal
         visible={showWarning}
         onRequestClose={() => setShowWarning(false)}
@@ -102,6 +110,7 @@ const App: () => Node = () => {
           </View>
         </View>
       </Modal>
+
       <Text style={styles.text}>Please write your name</Text>
       <TextInput
         style={styles.input}
@@ -115,19 +124,19 @@ const App: () => Node = () => {
         numberOfLines={1}
         multiline={false}></TextInput>
 
-      <Pressable
-        onPress={onPressHandler}
-        // onLongPress={onPressHandler}
-        hitSlop={{top: 10, bottom: 10, right: 10, left: 10}}
-        // delayLongPress={2000}
-        android_ripple={{color: '#00f'}}
-        style={({pressed}) => (
-          [styles.button], {backgroundColor: pressed ? '#00ff00' : '#123fff'}
-        )}>
-        <Text style={styles.text}>{submiited ? 'Clear' : 'Submit'}</Text>
-      </Pressable>
+      <LeenButton
+        onPressFunction={onPressHandler}
+        title={submitted ? 'Clear' : 'Submit'}
+        color={'#00ff00'}
+      />
 
-      {submiited ? (
+      <LeenButton
+        onPressFunction={onTestHandler}
+        title={'Test'}
+        color={'#ff00ff'}
+        style={{margin: 10}}
+      />
+      {submitted ? (
         <View style={styles.centered_view}>
           <Text style={styles.text}> You register as {name}</Text>
           <Image
@@ -142,7 +151,7 @@ const App: () => Node = () => {
       ) : (
         <Image
           style={styles.image}
-          source={require('./assets/cancel.png')}
+          source={require('../assets/cancel.png')}
           resizeMode="stretch"
         />
       )}
