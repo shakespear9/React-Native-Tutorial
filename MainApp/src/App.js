@@ -6,225 +6,91 @@
  * @flow strict-local
  */
 
+import 'react-native-gesture-handler';
 import React from 'react';
 import {Node, useState} from 'react';
 import {
   StyleSheet,
   Text,
   TextInput,
-  Button,
   useColorScheme,
   View,
-  TouchableOpacity,
-  TouchableHighlight,
-  TouchableWithoutFeedback,
   Pressable,
-  Alert,
-  ToastAndroid,
   Modal,
   Image,
   ImageBackground,
+  Button,
 } from 'react-native';
 
 import {Colors} from 'react-native/Libraries/NewAppScreen';
-import LeenButton from './CustomButton';
-import Header from './Header';
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
 
-const Section = ({children, title}): Node => {
-  const isDarkMode = useColorScheme() === 'dark';
+const Stack = createStackNavigator();
+
+const screenA = ({navigation}) => {
+  const onPressHandler = () => {
+    navigation.navigate('Screen_B');
+    // navigation.replace('Screen_B');
+  };
+
   return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
+    <View style={styles.body}>
+      <Text style={styles.text}>Screen A</Text>
+      <Pressable
+        onPress={onPressHandler}
+        style={({pressed}) => ({backgroundColor: pressed ? '#ddd' : '#ff13'})}>
+        <Text style={styles.text}>Go to Screen B</Text>
+      </Pressable>
     </View>
   );
 };
 
-const App: () => Node = () => {
-  const isDarkMode = useColorScheme() === 'dark';
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
-  const [name, setName] = useState('');
-  const [submitted, setSubmitted] = useState(false);
-  const [showWarning, setShowWarning] = useState(false);
-
+function screenB({navigation}) {
   const onPressHandler = () => {
-    if (name.length > 3) {
-      setSubmitted(!submitted);
-    } else {
-      setShowWarning(true);
-    }
+    navigation.goBack();
   };
-
-  const onTestHandler = () => {
-    console.warn('Test Pressed!');
-  };
-
   return (
-    <ImageBackground
-      style={styles.body}
-      source={{
-        uri: 'https://cdn.pixabay.com/photo/2015/03/27/00/09/puzzle-693870_960_720.jpg',
-      }}>
-      <Header />
-
-      <Modal
-        visible={showWarning}
-        onRequestClose={() => setShowWarning(false)}
-        transparent
-        animationType="slide"
-        hardwareAccelerated>
-        <View style={styles.centered_view}>
-          <View style={styles.warning_modal}>
-            <View style={styles.warning_title}>
-              <Text style={styles.text}>Warning !</Text>
-            </View>
-            <View style={styles.warning_body}>
-              <Text>The name must be longer than 3 characters.</Text>
-            </View>
-            <View style={styles.warning_footer}>
-              <Pressable
-                onPress={() => setShowWarning(false)}
-                android_ripple={{color: '#fff', borderless: false}}>
-                <Text style={styles.text}>OK</Text>
-              </Pressable>
-            </View>
-          </View>
-        </View>
-      </Modal>
-
-      <Text style={styles.text}>Please write your name</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="e.g. Nuttakorn"
-        onChangeText={val => setName(val)}
-        // keyboardType="default"
-        maxLength={10}
-        editable={true}
-        secureTextEntry={false}
-        showSoftInputOnFocus={false}
-        numberOfLines={1}
-        multiline={false}></TextInput>
-
-      <LeenButton
-        onPressFunction={onPressHandler}
-        title={submitted ? 'Clear' : 'Submit'}
-        color={'#00ff00'}
-      />
-
-      <LeenButton
-        onPressFunction={onTestHandler}
-        title={'Test'}
-        color={'#ff00ff'}
-        style={{margin: 10}}
-      />
-      {submitted ? (
-        <View style={styles.centered_view}>
-          <Text style={styles.text}> You register as {name}</Text>
-          <Image
-            style={styles.image}
-            source={{
-              uri: 'https://cdn.pixabay.com/photo/2013/07/13/10/33/cross-157492_960_720.png',
-            }}
-            resizeMode="center"
-            blurRadius={1}
-          />
-        </View>
-      ) : (
-        <Image
-          style={styles.image}
-          source={require('../assets/cancel.png')}
-          resizeMode="stretch"
-        />
-      )}
-    </ImageBackground>
+    <View style={styles.body}>
+      <Text style={styles.text}>Screen B</Text>
+      <Pressable
+        onPress={onPressHandler}
+        style={({pressed}) => ({
+          backgroundColor: pressed ? '#a21' : '#af1',
+        })}>
+        <Text style={styles.text}>Back to A</Text>
+      </Pressable>
+    </View>
   );
-};
+}
+
+function App() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator
+        screenOptions={{
+          header: () => null,
+        }}>
+        <Stack.Screen
+          name="Screen_A"
+          component={screenA}
+          options={{header: () => null}}
+        />
+        <Stack.Screen name="Screen_B" component={screenB} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
 
 const styles = StyleSheet.create({
   body: {
     flex: 1,
-    backgroundColor: '#fff54f',
-    flexDirection: 'column',
-    alignItems: 'center', // Vertical
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   text: {
-    color: '#000000',
-    fontSize: 20,
-    fontStyle: 'normal',
-    margin: 10,
-    textAlign: 'center',
-  },
-  input: {
-    textAlign: 'center',
-    width: 200,
-    fontSize: 20,
-    borderWidth: 1,
-    borderRadius: 5,
-    borderColor: '#000000',
-    marginBottom: 10,
-  },
-  button: {
-    backgroundColor: '#00ff00',
-    width: 150,
-    height: 50,
-    alignItems: 'center',
-  },
-  centered_view: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#00000099',
-  },
-  warning_modal: {
-    backgroundColor: '#ffffff',
-    width: 300,
-    height: 300,
-    borderWidth: 1,
-    borderRadius: 10,
-    borderColor: 'black',
-  },
-  warning_title: {
-    height: 50,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#ff1323',
-    borderTopRightRadius: 10,
-    borderTopLeftRadius: 10,
-  },
-  warning_body: {
-    height: 200,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-
-  warning_footer: {
-    height: 50,
-    backgroundColor: '#00ffff',
-    borderBottomLeftRadius: 10,
-    borderBottomRightRadius: 10,
-  },
-  image: {
-    width: 100,
-    height: 100,
+    fontSize: 40,
+    fontWeight: 'bold',
     margin: 10,
   },
 });
