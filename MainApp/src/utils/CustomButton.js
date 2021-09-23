@@ -21,7 +21,7 @@ const LeenButton = props => {
 
 const styles = StyleSheet.create({
   text: {
-    color: '#000000',
+    color: '#ffffff',
     fontSize: 20,
     fontStyle: 'normal',
     margin: 10,

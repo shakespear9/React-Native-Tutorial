@@ -11,16 +11,15 @@ import React from 'react';
 import {Node, useState} from 'react';
 import {} from 'react-native';
 
-import screenA from './screens/ScreenA';
-import {screenB} from './screens/ScreenB';
+import Home from './screens/Home';
+import Login from './screens/Login';
 
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {NavigationContainer} from '@react-navigation/native';
-import {createDrawerNavigator} from '@react-navigation/drawer';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import {Icon} from 'react-native-vector-icons/icon';
+import {createStackNavigator} from '@react-navigation/stack';
+import {globalStyleConst} from './utils/GlobalStyle';
 
-const Drawer = createDrawerNavigator();
+const Stack = createStackNavigator();
 
 //https://github.com/oblador/react-native-vector-icons#android
 //cd android
@@ -32,57 +31,28 @@ const Drawer = createDrawerNavigator();
 function App() {
   return (
     <NavigationContainer>
-      <Drawer.Navigator
-        initialRouteName="Screen_A"
+      <Stack.Navigator
+        initialRouteName="Login"
         screenOptions={() => ({
-          drawerPosition: 'right',
-          drawerType: 'front',
-          swipeEdgeWidth: 250,
-          drawerHideStatusBarOnOpen: true,
-          overlayColor: '#00000090',
-          drawerStyle: {backgroundColor: '#e6e6e6', width: 250},
-          headerShown: true,
-          headerTitleAlign: 'center',
-          swipeEnabled: true,
-          gestureEnabled: false,
+          headerTitleStyle: [
+            {
+              fontSize: 25,
+              fontWeight: 'bold',
+              backgroundColor: '#0080ff',
+            },
+            globalStyleConst.CustomFont,
+          ],
           headerStyle: {backgroundColor: '#0080ff'},
-          headerTintColor: 'white',
-          headerTitleStyle: {
-            fontSize: 25,
-            fontWeight: 'bold',
-          },
         })}>
-        <Drawer.Screen
-          name="Screen_A"
-          component={screenA}
+        <Stack.Screen
+          name="Login"
+          component={Login}
           options={{
-            title: 'Screen A Title',
-            drawerIcon: ({focused}) => (
-              <FontAwesome5
-                name="autoprefixer"
-                size={focused ? 25 : 20}
-                color={focused ? '#0080ff' : '#999999'}
-              />
-            ),
-            drawerStyle: {fontSize: 20},
+            headerShown: false,
           }}
         />
-        <Drawer.Screen
-          name="Screen_B"
-          component={screenB}
-          options={{
-            title: 'Screen B Title',
-            drawerIcon: ({focused}) => (
-              <FontAwesome5
-                name="btc"
-                size={focused ? 25 : 20}
-                color={focused ? '#0080ff' : '#999999'}
-              />
-            ),
-          }}
-          initialParams={{itemName: 'Item from Drawer', itemId: 99}}
-        />
-      </Drawer.Navigator>
+        <Stack.Screen name="Home" component={Home} />
+      </Stack.Navigator>
     </NavigationContainer>
   );
 }
