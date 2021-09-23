@@ -26,6 +26,9 @@ const Drawer = createDrawerNavigator();
 //cd android
 //./gradlew clean // for sync gradle
 
+// after edit react-native.config.js file
+//react-native link
+
 function App() {
   return (
     <NavigationContainer>

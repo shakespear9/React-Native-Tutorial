@@ -4,7 +4,7 @@ import {View, Pressable, Text, StyleSheet} from 'react-native';
 
 export default function screenA({navigation}) {
   const onPressHandler = () => {
-    navigation.navigate('Screen_B', {message: 'Message from A'});
+    navigation.navigate('Screen_B');
     // navigation.replace('Screen_B');
     // navigation.toggleDrawer();
   };
@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 40,
-    fontWeight: 'bold',
     margin: 10,
+    fontFamily: 'Kanit-Regular',
   },
 });
