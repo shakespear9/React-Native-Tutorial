@@ -1,5 +1,6 @@
 import React from 'react';
 import {View, Text, Pressable, StyleSheet} from 'react-native';
+import {globalStyleConst} from '../utils/GlobalStyle';
 
 export function screenB({navigation, route}) {
   //   const {itemName, itemId} = route.params;
@@ -16,7 +17,14 @@ export function screenB({navigation, route}) {
         style={({pressed}) => ({
           backgroundColor: pressed ? '#a21' : '#af1',
         })}>
-        <Text style={styles.text}>Back to A</Text>
+        <Text
+          style={[
+            styles.text,
+            globalStyleConst.CustomFont,
+            globalStyleConst.ButtonText,
+          ]}>
+          Back to A
+        </Text>
       </Pressable>
       {/* <Text style={styles.text}>{itemName}</Text>
       <Text style={styles.text}>{itemId}</Text> */}
@@ -32,7 +40,6 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 40,
-    fontWeight: 'bold',
     margin: 10,
   },
 });

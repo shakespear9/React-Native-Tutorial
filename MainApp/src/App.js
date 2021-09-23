@@ -11,8 +11,8 @@ import React from 'react';
 import {Node, useState} from 'react';
 import {} from 'react-native';
 
-import screenA from './ScreenA';
-import {screenB} from './ScreenB';
+import screenA from './screens/ScreenA';
+import {screenB} from './screens/ScreenB';
 
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {NavigationContainer} from '@react-navigation/native';
