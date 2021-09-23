@@ -6,6 +6,19 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {TextInput} from 'react-native-gesture-handler';
 import LeenButton from '../utils/CustomButton';
 
+import SQLite from 'react-native-sqlite-storage';
+
+const db = SQLite.openDatabase(
+  {
+    name: 'MainDB',
+    location: 'default',
+  },
+  () => {},
+  err => {
+    console.log(err);
+  },
+);
+
 export default function Home({navigation}) {
   const onPressHandler = () => {
     navigation.replace('Login');
@@ -23,15 +36,26 @@ export default function Home({navigation}) {
 
   const getData = () => {
     try {
-      // setName(AsyncStorage.getItem('userName'));
-      AsyncStorage.getItem('userData').then(value => {
-        if (value != null) {
-          let user = JSON.parse(value);
-          setName(user.name);
-          setPrevName(user.name);
-
-          setAge(user.age);
-        }
+      // AsyncStorage.getItem('userData').then(value => {
+      //   if (value != null) {
+      //     let user = JSON.parse(value);
+      //     setName(user.name);
+      //     setPrevName(user.name);
+      //     setAge(user.age);
+      //   }
+      // });
+      db.transaction(tx => {
+        tx.executeSql('SELECT Name,Age FROM USERS ', [], (tx, result) => {
+          console.log('getting data');
+          var len = result?.rows.length;
+          if (len > 0) {
+            let userName = result.rows.item(0).Name;
+            let userAge = result.rows.item(0).Age;
+            setName(userName);
+            setPrevName(userName);
+            setAge(userAge);
+          }
+        });
       });
     } catch (error) {
       console.log(error);
@@ -43,12 +67,26 @@ export default function Home({navigation}) {
       Alert.alert('Warning', 'Please write your data');
     } else {
       try {
-        let user = {
-          name: name,
-        };
-        await AsyncStorage.mergeItem('userData', JSON.stringify(user));
+        // let user = {
+        //   name: name,
+        // };
+        // await AsyncStorage.mergeItem('userData', JSON.stringify(user));
         setPrevName(name);
-        Alert.alert('Success!', 'Your data has been updated');
+        db.transaction(tx => {
+          tx.executeSql(
+            `UPDATE USERS 
+            SET NAME = ?
+            WHERE ID = 1;
+            `,
+            [name],
+            () => {
+              Alert.alert('Success!', 'Your data has been updated');
+            },
+            error => {
+              console.log(error);
+            },
+          );
+        });
       } catch (err) {
         console.log(err);
       }
@@ -58,8 +96,18 @@ export default function Home({navigation}) {
   const removeData = async () => {
     try {
       // await AsyncStorage.removeItem('userName');
-      await AsyncStorage.clear();
-      navigation.navigate('Login');
+      // await AsyncStorage.clear();
+      console.log('logging out');
+      db.transaction(tx => {
+        tx.executeSql(
+          `DELETE FROM USERS`,
+          [],
+          () => {
+            navigation.navigate('Login');
+          },
+          error => console.log(error),
+        );
+      });
     } catch (err) {
       console.log(err);
     }

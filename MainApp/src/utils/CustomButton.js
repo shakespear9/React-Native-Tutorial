@@ -1,7 +1,7 @@
-import React from 'react';
+import React, {forwardRef} from 'react';
 import {StyleSheet, Pressable, Text} from 'react-native';
 
-const LeenButton = props => {
+const LeenButton = forwardRef((props, ref) => {
   return (
     <Pressable
       onPress={props.onPressFunction}
@@ -13,11 +13,12 @@ const LeenButton = props => {
         styles.button,
         {backgroundColor: pressed ? '#dddd' : props.color},
         {...props.style},
-      ]}>
+      ]}
+      ref={ref ?? null}>
       <Text style={styles.text}>{props.title}</Text>
     </Pressable>
   );
-};
+});
 
 const styles = StyleSheet.create({
   text: {

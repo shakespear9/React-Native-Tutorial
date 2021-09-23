@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef, createRef} from 'react';
 import {
   StyleSheet,
   View,
@@ -10,22 +10,60 @@ import {
 } from 'react-native';
 import {SvgUri} from 'react-native-svg';
 import LeenButton from '../utils/CustomButton';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+// import AsyncStorage from '@react-native-async-storage/async-storage';
+import SQLite from 'react-native-sqlite-storage';
+
+const db = SQLite.openDatabase(
+  {
+    name: 'MainDB',
+    location: 'default',
+  },
+  () => {},
+  err => {
+    console.log(err);
+  },
+);
 
 const Login = ({navigation}) => {
   const [name, setName] = useState('');
   const [age, setAge] = useState('');
 
+  const ref_input2 = useRef();
+  const ref_logInButton = createRef();
+
   useEffect(() => {
+    craeteTable();
     getData();
   }, []);
 
+  const craeteTable = () => {
+    db.transaction(tx => {
+      tx.executeSql(
+        'CREATE TABLE IF NOT EXISTS USERS' +
+          '(ID INTEGER PRIMARY KEY AUTOINCREMENT,Name TEXT, Age INTEGER);',
+      );
+    });
+  };
+
   const getData = () => {
     try {
-      AsyncStorage.getItem('userData').then(value => {
-        if (value != null) {
-          navigation.replace('Home');
-        }
+      //   AsyncStorage.getItem('userData').then(value => {
+      //     if (value != null) {
+      //       navigation.replace('Home');
+      //     }
+      //   });
+      db.transaction(tx => {
+        tx.executeSql(
+          'SELECT Name,Age FROM USERS WHERE ID  = 1',
+          [],
+          (tx, result) => {
+            console.log(result);
+            var len = result?.rows.length;
+            if (len > 0) {
+              navigation.replace('Home');
+            }
+          },
+        );
       });
     } catch (error) {
       console.log(error);
@@ -37,12 +75,28 @@ const Login = ({navigation}) => {
       Alert.alert('Warning', 'Please write your data');
     } else {
       try {
-        var user = {
-          name: name,
-          age: age,
-        };
+        // var user = {
+        //   name: name,
+        //   age: age,
+        // };
 
-        await AsyncStorage.setItem('userData', JSON.stringify(user));
+        // await AsyncStorage.setItem('userData', JSON.stringify(user));
+        await db.transaction(async tx => {
+          //   await tx.executeSql(
+          //     `INSERT INTO Users (NAME,Age) VALUES ('${name},${age});'`,
+          //   );
+          console.log('Inserting Data');
+          await tx.executeSql(
+            `INSERT INTO Users (NAME,Age) VALUES (?,?);'`,
+            [name, age],
+            () => {
+              console.log('Success');
+            },
+            error => {
+              console.log('Failed');
+            },
+          );
+        });
         navigation.replace('Home');
       } catch (err) {
         console.log(err);
@@ -60,21 +114,35 @@ const Login = ({navigation}) => {
 
   return (
     <View style={styles.body}>
-      <Image source={require('../../assets/logo.png')} style={styles.logo} />
+      <Image source={require('../../assets/sqlite.png')} style={styles.logo} />
       <Text style={styles.text}>Async Storage</Text>
       <TextInput
         placeholder="Enter your name"
         style={styles.input}
         onChangeText={onChangeNameHandler}
         maxLength={20}
+        returnKeyType="next"
+        blurOnSubmit={false}
+        onSubmitEditing={() => {
+          ref_input2.current.focus();
+        }}
       />
       <TextInput
         placeholder="Entry your age"
         style={styles.input}
         onChangeText={onChangeAgeHandler}
         maxLength={20}
+        ref={ref_input2}
+        onSubmitEditing={() => {
+          ref_logInButton.current.focus();
+        }}
       />
-      <LeenButton title="login" color="#1eb900" onPressFunction={setData} />
+      <LeenButton
+        title="login"
+        color="#1eb900"
+        onPressFunction={setData}
+        ref={ref_logInButton}
+      />
     </View>
   );
 };
@@ -86,7 +154,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#0080ff',
   },
   logo: {
-    width: 100,
+    width: 200,
     height: 100,
     margin: 20,
   },
