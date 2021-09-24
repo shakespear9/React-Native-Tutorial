@@ -1,13 +1,13 @@
 import React, {useState, useEffect} from 'react';
 
-import {View, Pressable, Text, StyleSheet, Alert} from 'react-native';
+import {View, Pressable, Text, StyleSheet, Alert, FlatList} from 'react-native';
 import GlobalStyle, {globalStyleConst} from '../utils/GlobalStyle';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {TextInput} from 'react-native-gesture-handler';
 import LeenButton from '../utils/CustomButton';
 
 import SQLite from 'react-native-sqlite-storage';
-import {setAge, setName, increaseAge} from '../redux/actions';
+import {setAge, setName, increaseAge, getCities} from '../redux/actions';
 import {useSelector, useDispatch} from 'react-redux';
 
 const db = SQLite.openDatabase(
@@ -21,6 +21,25 @@ const db = SQLite.openDatabase(
   },
 );
 
+const mockData = [
+  {
+    country: 'United State',
+    city: 'New York',
+  },
+  {
+    country: 'Australia',
+    city: 'Sydney',
+  },
+  {
+    country: 'Germany',
+    city: 'Berlin',
+  },
+  {
+    country: 'Thailand',
+    city: 'Bangkok',
+  },
+];
+
 export default function Home({navigation}) {
   const onPressHandler = () => {
     navigation.replace('Login');
@@ -28,7 +47,7 @@ export default function Home({navigation}) {
     // navigation.toggleDrawer();
   };
 
-  const {name, age} = useSelector(state => state.userReducer);
+  const {name, age, cities} = useSelector(state => state.userReducer);
   const dispatch = useDispatch();
 
   // const [name, setName] = useState('');
@@ -37,6 +56,8 @@ export default function Home({navigation}) {
 
   useEffect(async () => {
     getData();
+    dispatch(getCities());
+    console.log(cities);
   }, []);
 
   const getData = () => {
@@ -127,7 +148,16 @@ export default function Home({navigation}) {
       <Text style={[styles.text, GlobalStyle.CustomFont]}>
         Welcome {prevName}
       </Text>
-      <Text style={[styles.text, GlobalStyle.CustomFont]}>
+      <FlatList
+        data={cities}
+        renderItem={({item}) => (
+          <View style={styles.item}>
+            <Text style={styles.country}>{item.country}</Text>
+            <Text style={styles.city}>{item.city}</Text>
+          </View>
+        )}
+        keyExtractor={(item, index) => index.toString()}></FlatList>
+      {/* <Text style={[styles.text, GlobalStyle.CustomFont]}>
         Your age is {age}
       </Text>
       <TextInput
@@ -152,7 +182,7 @@ export default function Home({navigation}) {
           dispatch(increaseAge());
         }}
         style={{marginTop: 10}}
-      />
+      /> */}
     </View>
   );
 }
@@ -175,5 +205,24 @@ const styles = StyleSheet.create({
     fontSize: 30,
     marginTop: 130,
     marginBottom: 30,
+  },
+  item: {
+    backgroundColor: '#ffffff',
+    borderWidth: 2,
+    borderColor: '#cccccc',
+    borderRadius: 5,
+    margin: 7,
+    width: 350,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  country: {
+    fontSize: 30,
+    margin: 10,
+  },
+  city: {
+    fontSize: 20,
+    margin: 10,
+    color: '#999999',
   },
 });

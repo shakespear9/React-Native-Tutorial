@@ -123,7 +123,7 @@ const Login = ({navigation}) => {
 
   return (
     <View style={styles.body}>
-      <Image source={require('../../assets/redux.png')} style={styles.logo} />
+      {/* <Image source={require('../../assets/redux.png')} style={styles.logo} /> */}
       <Text style={styles.text}>Redux</Text>
       <TextInput
         placeholder="Enter your name"
