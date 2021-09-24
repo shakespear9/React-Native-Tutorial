@@ -7,11 +7,13 @@ import {TextInput} from 'react-native-gesture-handler';
 import LeenButton from '../utils/CustomButton';
 
 import SQLite from 'react-native-sqlite-storage';
+import {setAge, setName, increaseAge} from '../redux/actions';
+import {useSelector, useDispatch} from 'react-redux';
 
 const db = SQLite.openDatabase(
   {
     name: 'MainDB',
-    location: 'default',
+    location: `Library`,
   },
   () => {},
   err => {
@@ -26,8 +28,11 @@ export default function Home({navigation}) {
     // navigation.toggleDrawer();
   };
 
-  const [name, setName] = useState('');
-  const [age, setAge] = useState('');
+  const {name, age} = useSelector(state => state.userReducer);
+  const dispatch = useDispatch();
+
+  // const [name, setName] = useState('');
+  // const [age, setAge] = useState('');
   const [prevName, setPrevName] = useState('');
 
   useEffect(async () => {
@@ -51,9 +56,11 @@ export default function Home({navigation}) {
           if (len > 0) {
             let userName = result.rows.item(0).Name;
             let userAge = result.rows.item(0).Age;
-            setName(userName);
+            // setName(userName);
+            // setAge(userAge);
+            dispatch(setName(userName));
+            dispatch(setAge(userAge));
             setPrevName(userName);
-            setAge(userAge);
           }
         });
       });
@@ -72,6 +79,8 @@ export default function Home({navigation}) {
         // };
         // await AsyncStorage.mergeItem('userData', JSON.stringify(user));
         setPrevName(name);
+        dispatch(setName(name));
+        dispatch(setAge(age));
         db.transaction(tx => {
           tx.executeSql(
             `UPDATE USERS 
@@ -125,7 +134,7 @@ export default function Home({navigation}) {
         style={styles.input}
         placeholder="Enter your name"
         value={name}
-        onChangeText={val => setName(val)}
+        onChangeText={val => dispatch(setName(val))}
       />
 
       <LeenButton title="Update" color="#ff7f00" onPressFunction={updateData} />
@@ -133,6 +142,15 @@ export default function Home({navigation}) {
         title="Log Out"
         color="#ff1234"
         onPressFunction={removeData}
+        style={{marginTop: 10}}
+      />
+
+      <LeenButton
+        title="Increase Age"
+        color="#ff2"
+        onPressFunction={() => {
+          dispatch(increaseAge());
+        }}
         style={{marginTop: 10}}
       />
     </View>

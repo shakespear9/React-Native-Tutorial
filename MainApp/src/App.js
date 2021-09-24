@@ -19,41 +19,48 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {globalStyleConst} from './utils/GlobalStyle';
 
+import {Provider} from 'react-redux';
+import {Store} from './redux/store';
+
 const Stack = createStackNavigator();
 
 //https://github.com/oblador/react-native-vector-icons#android
 //cd android
 //./gradlew clean // for sync gradle
 
-// after edit react-native.config.js file
-//react-native link
+// react-redux
+// npm install redux
+// npm install react-redux
+// npm install redux-thunk  ---> for middleware async
 
 function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator
-        initialRouteName="Login"
-        screenOptions={() => ({
-          headerTitleStyle: [
-            {
-              fontSize: 25,
-              fontWeight: 'bold',
-              backgroundColor: '#0080ff',
-            },
-            globalStyleConst.CustomFont,
-          ],
-          headerStyle: {backgroundColor: '#0080ff'},
-        })}>
-        <Stack.Screen
-          name="Login"
-          component={Login}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen name="Home" component={Home} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Provider store={Store}>
+      <NavigationContainer>
+        <Stack.Navigator
+          initialRouteName="Login"
+          screenOptions={() => ({
+            headerTitleStyle: [
+              {
+                fontSize: 25,
+                fontWeight: 'bold',
+                backgroundColor: '#0080ff',
+              },
+              globalStyleConst.CustomFont,
+            ],
+            headerStyle: {backgroundColor: '#0080ff'},
+          })}>
+          <Stack.Screen
+            name="Login"
+            component={Login}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen name="Home" component={Home} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 }
 

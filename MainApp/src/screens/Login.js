@@ -12,11 +12,13 @@ import {SvgUri} from 'react-native-svg';
 import LeenButton from '../utils/CustomButton';
 // import AsyncStorage from '@react-native-async-storage/async-storage';
 import SQLite from 'react-native-sqlite-storage';
+import {useSelector, useDispatch} from 'react-redux';
+import {setName, setAge} from '../redux/actions';
 
 const db = SQLite.openDatabase(
   {
     name: 'MainDB',
-    location: 'default',
+    location: `Library`,
   },
   () => {},
   err => {
@@ -25,8 +27,11 @@ const db = SQLite.openDatabase(
 );
 
 const Login = ({navigation}) => {
-  const [name, setName] = useState('');
-  const [age, setAge] = useState('');
+  const {name, age} = useSelector(state => state.userReducer); // map reducer
+  const dispatch = useDispatch(); // for call action
+
+  // const [name, setName] = useState('');
+  // const [age, setAge] = useState('');
 
   const ref_input2 = useRef();
   const ref_logInButton = createRef();
@@ -75,6 +80,8 @@ const Login = ({navigation}) => {
       Alert.alert('Warning', 'Please write your data');
     } else {
       try {
+        dispatch(setName(name));
+        dispatch(setAge(age));
         // var user = {
         //   name: name,
         //   age: age,
@@ -105,11 +112,13 @@ const Login = ({navigation}) => {
   };
 
   const onChangeNameHandler = val => {
-    setName(val);
+    // setName(val);
+    dispatch(setName(val));
   };
 
   const onChangeAgeHandler = val => {
-    setAge(val);
+    // setAge(val);
+    dispatch(setAge(val));
   };
 
   return (
