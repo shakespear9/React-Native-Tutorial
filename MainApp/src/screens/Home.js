@@ -1,6 +1,14 @@
 import React, {useState, useEffect} from 'react';
 
-import {View, Pressable, Text, StyleSheet, Alert, FlatList} from 'react-native';
+import {
+  View,
+  Pressable,
+  Text,
+  StyleSheet,
+  Alert,
+  FlatList,
+  TouchableOpacity,
+} from 'react-native';
 import GlobalStyle, {globalStyleConst} from '../utils/GlobalStyle';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {TextInput} from 'react-native-gesture-handler';
@@ -9,6 +17,7 @@ import LeenButton from '../utils/CustomButton';
 import SQLite from 'react-native-sqlite-storage';
 import {setAge, setName, increaseAge, getCities} from '../redux/actions';
 import {useSelector, useDispatch} from 'react-redux';
+import PushNotification from 'react-native-push-notification';
 
 const db = SQLite.openDatabase(
   {
@@ -143,6 +152,27 @@ export default function Home({navigation}) {
     }
   };
 
+  const handleNotification = (item, index) => {
+    PushNotification.cancelAllLocalNotifications();
+
+    PushNotification.localNotification({
+      channelId: 'test-channel',
+      title: 'You clicked on ' + item.country,
+      message: item.city,
+      bigText: item.city + 'This is Longer Text',
+      color: 'red',
+      id: index,
+    });
+
+    PushNotification.localNotificationSchedule({
+      channelId: 'test-channel',
+      title: 'Alarm',
+      message: 'you clicked on' + item.country + '20 seconds ago',
+      date: new Date(Date.now() + 20 * 1000),
+      allowWhileIdle: true,
+    });
+  };
+
   return (
     <View style={styles.body}>
       <Text style={[styles.text, GlobalStyle.CustomFont]}>
@@ -150,11 +180,13 @@ export default function Home({navigation}) {
       </Text>
       <FlatList
         data={cities}
-        renderItem={({item}) => (
-          <View style={styles.item}>
-            <Text style={styles.country}>{item.country}</Text>
-            <Text style={styles.city}>{item.city}</Text>
-          </View>
+        renderItem={({item, index}) => (
+          <TouchableOpacity onPress={() => handleNotification(item, index)}>
+            <View style={styles.item}>
+              <Text style={styles.country}>{item.country}</Text>
+              <Text style={styles.city}>{item.city}</Text>
+            </View>
+          </TouchableOpacity>
         )}
         keyExtractor={(item, index) => index.toString()}></FlatList>
       {/* <Text style={[styles.text, GlobalStyle.CustomFont]}>

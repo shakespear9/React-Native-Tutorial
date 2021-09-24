@@ -14,6 +14,7 @@ import LeenButton from '../utils/CustomButton';
 import SQLite from 'react-native-sqlite-storage';
 import {useSelector, useDispatch} from 'react-redux';
 import {setName, setAge} from '../redux/actions';
+import PushNotification from 'react-native-push-notification';
 
 const db = SQLite.openDatabase(
   {
@@ -39,6 +40,7 @@ const Login = ({navigation}) => {
   useEffect(() => {
     craeteTable();
     getData();
+    createChannel();
   }, []);
 
   const craeteTable = () => {
@@ -109,6 +111,13 @@ const Login = ({navigation}) => {
         console.log(err);
       }
     }
+  };
+
+  const createChannel = () => {
+    PushNotification.createChannel({
+      channelId: 'test-channel',
+      channelName: 'Test Channel',
+    });
   };
 
   const onChangeNameHandler = val => {

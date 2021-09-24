@@ -28,10 +28,8 @@ const Stack = createStackNavigator();
 //cd android
 //./gradlew clean // for sync gradle
 
-// react-redux
-// npm install redux
-// npm install react-redux
-// npm install redux-thunk  ---> for middleware async
+// push notification
+// npm install react-native-push-notification
 
 function App() {
   return (
