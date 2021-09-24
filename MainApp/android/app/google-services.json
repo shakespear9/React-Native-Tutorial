@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "540259180867",
+    "project_id": "testreactnative-fa1eb",
+    "storage_bucket": "testreactnative-fa1eb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:540259180867:android:64b24ad59023f26ffdcff6",
+        "android_client_info": {
+          "package_name": "com.mainapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "540259180867-r5jffmdpj3apmccj1punj7f7kcfruq37.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBoSHD31OLvWDd2gzg3rPav4qFUjT3y3Rc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "540259180867-r5jffmdpj3apmccj1punj7f7kcfruq37.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
