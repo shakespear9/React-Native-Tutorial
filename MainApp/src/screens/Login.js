@@ -91,13 +91,13 @@ const Login = ({navigation}) => {
             [name, age],
             () => {
               console.log('Success');
+              navigation.replace('Home');
             },
             error => {
               console.log('Failed');
             },
           );
         });
-        navigation.replace('Home');
       } catch (err) {
         console.log(err);
       }
@@ -114,8 +114,8 @@ const Login = ({navigation}) => {
 
   return (
     <View style={styles.body}>
-      <Image source={require('../../assets/sqlite.png')} style={styles.logo} />
-      <Text style={styles.text}>Async Storage</Text>
+      <Image source={require('../../assets/redux.png')} style={styles.logo} />
+      <Text style={styles.text}>Redux</Text>
       <TextInput
         placeholder="Enter your name"
         style={styles.input}
@@ -154,14 +154,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#0080ff',
   },
   logo: {
-    width: 200,
-    height: 100,
+    width: 150,
+    height: 150,
     margin: 20,
   },
   text: {
     fontSize: 30,
     color: '#ffffff',
-    marginBottom: 130,
+    marginBottom: 100,
   },
   input: {
     width: 300,

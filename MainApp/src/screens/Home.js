@@ -103,7 +103,7 @@ export default function Home({navigation}) {
           `DELETE FROM USERS`,
           [],
           () => {
-            navigation.navigate('Login');
+            navigation.replace('Login');
           },
           error => console.log(error),
         );
