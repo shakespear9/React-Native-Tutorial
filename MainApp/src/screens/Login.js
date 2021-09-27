@@ -19,7 +19,7 @@ import PushNotification from 'react-native-push-notification';
 const db = SQLite.openDatabase(
   {
     name: 'MainDB',
-    location: `Library`,
+    location: `deafult`,
   },
   () => {},
   err => {

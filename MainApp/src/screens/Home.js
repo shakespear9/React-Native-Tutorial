@@ -178,6 +178,13 @@ export default function Home({navigation}) {
       <Text style={[styles.text, GlobalStyle.CustomFont]}>
         Welcome {prevName}
       </Text>
+      <LeenButton
+        title="Open Camara"
+        color="#0080ff"
+        onPressFunction={() => {
+          navigation.navigate('Camera');
+        }}
+      />
       <FlatList
         data={cities}
         renderItem={({item, index}) => (

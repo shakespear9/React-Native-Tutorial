@@ -22,6 +22,7 @@ import {globalStyleConst} from './utils/GlobalStyle';
 import {Provider} from 'react-redux';
 import {Store} from './redux/store';
 import Map from './screens/Map';
+import Camera from './screens/Camera';
 
 const Stack = createStackNavigator();
 
@@ -29,8 +30,9 @@ const Stack = createStackNavigator();
 //cd android
 //./gradlew clean // for sync gradle
 
-// google map
-// react native map : https://github.com/react-native-maps/react-native-maps
+// react-native-camera : https://github.com/react-native-camera/react-native-camera
+// react-native-camera-hooks : https://github.com/react-native-maps/react-native-maps
+// react-native-fs : https://github.com/itinance/react-native-fs
 
 function App() {
   return (
@@ -58,6 +60,7 @@ function App() {
           />
           <Stack.Screen name="Home" component={Home} />
           <Stack.Screen name="Map" component={Map} />
+          <Stack.Screen name="Camera" component={Camera} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
