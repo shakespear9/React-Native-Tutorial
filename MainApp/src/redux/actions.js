@@ -7,7 +7,7 @@ export const SET_USER_AGE = 'SET_USER_AGE';
 export const SET_INCREASE_AGE = 'SET_INCREASE_AGE';
 export const GET_CITIES = 'GET_CITIES';
 
-const mockAPI = `https://mocki.io/v1/1f5913cc-cc0f-43dd-aada-f00eb4f13db9`;
+const mockAPI = `https://mocki.io/v1/f6726a7a-b8b4-41a0-bc37-6ee607fc26b8`;
 
 export const setName = name => dispatch => {
   dispatch({

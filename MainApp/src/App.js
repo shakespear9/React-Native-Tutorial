@@ -21,6 +21,7 @@ import {globalStyleConst} from './utils/GlobalStyle';
 
 import {Provider} from 'react-redux';
 import {Store} from './redux/store';
+import Map from './screens/Map';
 
 const Stack = createStackNavigator();
 
@@ -28,8 +29,8 @@ const Stack = createStackNavigator();
 //cd android
 //./gradlew clean // for sync gradle
 
-// push notification
-// npm install react-native-push-notification
+// google map
+// react native map : https://github.com/react-native-maps/react-native-maps
 
 function App() {
   return (
@@ -56,6 +57,7 @@ function App() {
             }}
           />
           <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen name="Map" component={Map} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

@@ -181,7 +181,15 @@ export default function Home({navigation}) {
       <FlatList
         data={cities}
         renderItem={({item, index}) => (
-          <TouchableOpacity onPress={() => handleNotification(item, index)}>
+          <TouchableOpacity
+            onPress={() => {
+              handleNotification(item, index);
+              navigation.navigate('Map', {
+                city: item.city,
+                lat: item.lat,
+                lng: item.lng,
+              });
+            }}>
             <View style={styles.item}>
               <Text style={styles.country}>{item.country}</Text>
               <Text style={styles.city}>{item.city}</Text>
@@ -189,32 +197,6 @@ export default function Home({navigation}) {
           </TouchableOpacity>
         )}
         keyExtractor={(item, index) => index.toString()}></FlatList>
-      {/* <Text style={[styles.text, GlobalStyle.CustomFont]}>
-        Your age is {age}
-      </Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Enter your name"
-        value={name}
-        onChangeText={val => dispatch(setName(val))}
-      />
-
-      <LeenButton title="Update" color="#ff7f00" onPressFunction={updateData} />
-      <LeenButton
-        title="Log Out"
-        color="#ff1234"
-        onPressFunction={removeData}
-        style={{marginTop: 10}}
-      />
-
-      <LeenButton
-        title="Increase Age"
-        color="#ff2"
-        onPressFunction={() => {
-          dispatch(increaseAge());
-        }}
-        style={{marginTop: 10}}
-      /> */}
     </View>
   );
 }
