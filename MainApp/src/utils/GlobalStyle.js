@@ -8,10 +8,13 @@ export const globalStyleConst = StyleSheet.create({
     fontSize: 25,
     padding: 10,
   },
+  CustomFontHW: {
+    fontFamily: 'IndieFlower-Regular',
+  },
 });
 
 export default StyleSheet.create({
-  CustomFont: {
-    fontFamily: 'Kanit-Regular',
+  CustomFontBig: {
+    fontFamily: 'AbrilFatface-Regular',
   },
 });
