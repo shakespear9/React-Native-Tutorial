@@ -1,9 +1,10 @@
 import { StatusBar } from "expo-status-bar";
-import React from "react";
+import React, { useEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { ArchitectsDaughter_400Regular } from "@expo-google-fonts/architects-daughter";
 import { useFonts } from "expo-font";
 import AppLoading from "expo-app-loading";
+import * as Font from "expo-font";
 
 export default function App() {
   let [fontLoaded, error] = useFonts({
@@ -15,6 +16,12 @@ export default function App() {
   //expo install @expo-google-fonts/architects-daughter https://directory.vercel.app/
   //expo install expo-app-loading
 
+  // useEffect(() => {
+  //   async loadingFont = () => {
+  //     await Font.loadAsync({})
+  //   }
+  // }, [input]);
+
   if (!AppLoading) {
     return <AppLoading />;
   }
@@ -23,8 +30,8 @@ export default function App() {
     <View style={styles.container}>
       <Text
         style={{
-          fontFamily: "Kanit",
-          fontSize: 20,
+          fontFamily: "Regular",
+          fontSize: 30,
         }}
       >
         Open up App.js to start working on your app!
@@ -42,3 +49,4 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 });
+0;
