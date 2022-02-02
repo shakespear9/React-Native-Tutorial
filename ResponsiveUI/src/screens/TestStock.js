@@ -13,9 +13,13 @@ import {Appbar, DataTable, TextInput} from 'react-native-paper';
 
 const MORE_ICON = Platform.OS === 'ios' ? 'dots-horizontal' : 'dots-vertical';
 
-const windowHeight = Dimensions.get('window').height;
+// const windowHeight = Dimensions.get('window').height;
 
 const TestScreen = ({route, navigation}) => {
+  const windowHeight = Dimensions.get('window').height;
+  // console.log(windowHeight);
+
+  const [bottomAvailableHeight, setBottomAvailableHeight] = useState(0);
   //   const [input, setInput] = useState('');
   // useEffect(() => {
   //   KeyEvent.onKeyDownListener(KeyEvent => {
@@ -29,32 +33,36 @@ const TestScreen = ({route, navigation}) => {
   //   };
   // }, [input]);
 
+  const updateHeight = e => {
+    // console.log(JSON.stringify(e));
+    console.log(e.nativeEvent);
+    // setBottomAvailableHeight(e.nativeElement.layout.height);
+  };
+
   return (
     <View style={styles.container}>
-      <View>
-        <Appbar.Header statusBarHeight={0} style={{elevation: 24}}>
-          <Appbar.Action
-            icon="arrow-left"
-            onPress={() => {
-              navigation.goBack();
+      <Appbar.Header statusBarHeight={0} style={{elevation: 24}}>
+        <Appbar.Action
+          icon="arrow-left"
+          onPress={() => {
+            // navigation.goBack();
+          }}
+        />
+        <View
+          style={[
+            StyleSheet.absoluteFill,
+            {alignItems: 'center', justifyContent: 'center'},
+          ]}
+          pointerEvents="box-none">
+          <Appbar.Content
+            title="abcdef"
+            style={{
+              alignItems: 'center',
+              justifyContent: 'center',
             }}
           />
-          <View
-            style={[
-              StyleSheet.absoluteFill,
-              {alignItems: 'center', justifyContent: 'center'},
-            ]}
-            pointerEvents="box-none">
-            <Appbar.Content
-              title="abcdef"
-              style={{
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-            />
-          </View>
-        </Appbar.Header>
-      </View>
+        </View>
+      </Appbar.Header>
 
       {/* <ScrollView
         style={styles.inner_container}
@@ -68,80 +76,86 @@ const TestScreen = ({route, navigation}) => {
           flexDirection: 'column',
         }}> */}
       {/* <KeyboardAvoidingView style={styles.inner_container}> */}
-      <View style={styles.inner_container}>
-        <ScrollView contentContainerStyle={{flex: 1}}>
-          {/* <KeyboardAvoidingView
+      {/* <View style={styles.inner_container}> */}
+      <ScrollView
+        style={{flex: 1}}
+        contentContainerStyle={{flexGrow: 1}}
+        nestedScrollEnabled={true}>
+        {/* <KeyboardAvoidingView
             showsVerticalScrollIndicator={false}
             style={{flex: 1}}> */}
-          <View style={styles.header}>
-            <View style={styles.input_group}>
-              <Text style={styles.label_header}>Shipping Inst No.</Text>
-              <TextInput style={styles.input_full} />
-            </View>
-            <View style={styles.input_group}>
-              <Text style={styles.label_header}>Date</Text>
-              <TextInput style={styles.input_full} />
-            </View>
-            <View style={styles.input_group}>
-              <Text style={styles.label_header}>Customer PO No.</Text>
-              <TextInput style={styles.input_full} />
-            </View>
+        <View style={styles.header}>
+          <View style={styles.input_group}>
+            <Text style={styles.label_header}>Shipping Inst No.</Text>
+            <TextInput style={styles.input_full} />
           </View>
-          <View style={styles.body}>
-            <View style={styles.input_group}>
-              <Text style={styles.label_body}>Lot No.</Text>
-              <TextInput style={styles.input_full} />
-            </View>
-            <View style={styles.input_group}>
-              <Text style={styles.label_body}>Name</Text>
-              <TextInput style={styles.input_full} />
-            </View>
-            <View style={styles.input_group}>
-              <Text style={styles.label_body}>Size</Text>
-              <TextInput style={styles.input_full} />
-            </View>
-            <View style={styles.input_group}>
-              <Text style={styles.label_body}>Pack No.</Text>
-              <TextInput style={styles.input_split} />
-              <Text style={styles.label_body}>Qty</Text>
-              <TextInput style={styles.input_split} />
-            </View>
-            <View style={styles.input_group}>
-              <Text style={styles.label_body}>Weight</Text>
-              <TextInput style={styles.input_split} />
-              <Text style={styles.label_body}>G/Weight</Text>
-              <TextInput style={styles.input_split} />
-            </View>
+          <View style={styles.input_group}>
+            <Text style={styles.label_header}>Date</Text>
+            <TextInput style={styles.input_full} />
           </View>
+          <View style={styles.input_group}>
+            <Text style={styles.label_header}>Customer PO No.</Text>
+            <TextInput style={styles.input_full} />
+          </View>
+        </View>
+        <View style={styles.body}>
+          <View style={styles.input_group}>
+            <Text style={styles.label_body}>Lot No.</Text>
+            <TextInput style={styles.input_full} />
+          </View>
+          <View style={styles.input_group}>
+            <Text style={styles.label_body}>Name</Text>
+            <TextInput style={styles.input_full} />
+          </View>
+          <View style={styles.input_group}>
+            <Text style={styles.label_body}>Size</Text>
+            <TextInput style={styles.input_full} />
+          </View>
+          <View style={styles.input_group}>
+            <Text style={styles.label_body}>Pack No.</Text>
+            <TextInput style={styles.input_split} />
+            <Text style={styles.label_body}>Qty</Text>
+            <TextInput style={styles.input_split} />
+          </View>
+          <View style={styles.input_group}>
+            <Text style={styles.label_body}>Weight</Text>
+            <TextInput style={styles.input_split} />
+            <Text style={styles.label_body}>G/Weight</Text>
+            <TextInput style={styles.input_split} />
+          </View>
+        </View>
 
-          <View style={styles.footer}>
-            <DataTable style={{marginTop: 0, flex: 1}}>
-              <DataTable.Header style={{height: 30, marginTop: 0}}>
-                <DataTable.Title style={{paddingVertical: 5}}>
-                  Dessert
-                </DataTable.Title>
-                <DataTable.Title
-                  style={{
-                    paddingVertical: 5,
-                  }}
-                  numeric>
-                  Calories
-                </DataTable.Title>
-                <DataTable.Title style={{paddingVertical: 5}} numeric>
-                  Fat
-                </DataTable.Title>
-              </DataTable.Header>
-              <ScrollView
+        <View style={styles.footer} onLayout={updateHeight}>
+          {/* <DataTable style={{marginTop: 0, flex: 1}}>
+            <DataTable.Header style={{height: 30, marginTop: 0}}>
+              <DataTable.Title style={{paddingVertical: 5}}>
+                Dessert
+              </DataTable.Title>
+              <DataTable.Title
+                style={{
+                  paddingVertical: 5,
+                }}
+                numeric>
+                Calories
+              </DataTable.Title>
+              <DataTable.Title style={{paddingVertical: 5}} numeric>
+                Fat
+              </DataTable.Title>
+            </DataTable.Header> */}
+          {/* <ScrollView
                 nestedScrollEnabled={true}
-                // style={{flex: 1}}
-                // contentContainerStyle={{flexGrow: 0, overflow: 'visible'}}>
-              >
+                style={{
+                  width: '95%',
+                  marginHorizontal: 10,
+                  height: windowHeight * 0.1,
+                  flex: 1,
+                }}
+                contentContainerStyle={{flexGrow: 1}}>
                 <DataTable.Row style={{minHeight: 25}}>
                   <DataTable.Cell>Frozen yogurt</DataTable.Cell>
                   <DataTable.Cell numeric>159</DataTable.Cell>
                   <DataTable.Cell numeric>6.0</DataTable.Cell>
                 </DataTable.Row>
-
                 <DataTable.Row style={{minHeight: 25}}>
                   <DataTable.Cell>Ice cream sandwich</DataTable.Cell>
                   <DataTable.Cell numeric>237</DataTable.Cell>
@@ -192,15 +206,53 @@ const TestScreen = ({route, navigation}) => {
                   <DataTable.Cell numeric>237</DataTable.Cell>
                   <DataTable.Cell numeric>8.0</DataTable.Cell>
                 </DataTable.Row>
-              </ScrollView>
-            </DataTable>
-          </View>
-          {/* <View style={styles.dummy}>
+              </ScrollView> */}
+          {/* </DataTable> */}
+          <ScrollView
+            style={{
+              height: bottomAvailableHeight,
+              // flex: 1,
+              backgroundColor: 'pink',
+            }}
+            // onLayout={updateHeight}
+            nestedScrollEnabled={true}
+            contentContainerStyle={{marginHorizontal: 10}}>
+            <Text>abcdef</Text>
+            <Text>abcdef</Text>
+            <Text>abcdef</Text>
+            <Text>abcdef</Text>
+            <Text>abcdef</Text>
+            <Text>abcdef</Text>
+            <Text>abcdef</Text>
+            <Text>abcdef</Text>
+            <Text>abcdef</Text>
+            <Text>abcdef</Text>
+            <Text>abcdef</Text>
+            <Text>abcdef</Text>
+            <Text>abcdef</Text>
+            <Text>abcdef</Text>
+            <Text>abcdef</Text>
+            <Text>abcdef</Text>
+            <Text>abcdef</Text>
+            <Text>abcdef</Text>
+            <Text>abcdef</Text>
+            <Text>abcdef</Text>
+            <Text>abcdef</Text>
+            <Text>abcdef</Text>
+            <Text>abcdef</Text>
+            <Text>abcdef</Text>
+            <Text>abcdef</Text>
+            <Text>abcdef</Text>
+            <Text>abcdef</Text>
+            <Text>abcdef</Text>
+          </ScrollView>
+        </View>
+        {/* <View style={styles.dummy}>
             <TextInput style={styles.input_split}></TextInput>
           </View> */}
-          {/* </KeyboardAvoidingView> */}
-        </ScrollView>
-      </View>
+        {/* </KeyboardAvoidingView> */}
+      </ScrollView>
+      {/* </View> */}
       {/* </KeyboardAvoidingView> */}
       {/* </View> */}
       {/* </ScrollView> */}
@@ -227,7 +279,7 @@ const styles = StyleSheet.create({
   inner_container: {flex: 1, backgroundColor: 'hsl(21, 100%, 85%)'},
   header: {
     // width: '100%',
-    height: '22%',
+    // height: '22%',
     marginHorizontal: 10,
     flexDirection: 'column',
     paddingTop: 10,
@@ -258,7 +310,7 @@ const styles = StyleSheet.create({
     marginRight: 5,
   },
   body: {
-    height: '36%',
+    // height: '36%',
     borderColor: 'black',
     borderWidth: 1,
     marginHorizontal: 10,
@@ -281,6 +333,7 @@ const styles = StyleSheet.create({
     // borderColor: 'black',
     marginTop: 5,
     // height: '30%',
+    paddingHorizontal: 5,
   },
   dummy: {
     height: '10%',

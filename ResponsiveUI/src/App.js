@@ -23,7 +23,7 @@ import YogaGenerated from './screens/YogaGenerated';
 
 const App: () => Node = () => {
   // return <TestStock />;
-  return <ResponsiveFlex />;
+  return <TestStock />;
   // return <YogaGenerated />;
 };
 
