@@ -1,2 +1,5 @@
 Responsive Layout react native 
 ref : https://www.youtube.com/watch?v=9jUtm-GokZI
+
+made each child view to be full height of screen 
+ref : https://stackoverflow.com/questions/63196779/react-native-make-each-child-of-scrollview-full-height 

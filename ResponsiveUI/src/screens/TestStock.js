@@ -1,3 +1,4 @@
+'use strict';
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState, useEffect} from 'react';
 import {
@@ -17,6 +18,7 @@ const MORE_ICON = Platform.OS === 'ios' ? 'dots-horizontal' : 'dots-vertical';
 
 const TestScreen = ({route, navigation}) => {
   const windowHeight = Dimensions.get('window').height;
+  const windowWidth = Dimensions.get('window').width;
   // console.log(windowHeight);
 
   const [bottomAvailableHeight, setBottomAvailableHeight] = useState(0);
@@ -35,8 +37,11 @@ const TestScreen = ({route, navigation}) => {
 
   const updateHeight = e => {
     // console.log(JSON.stringify(e));
-    console.log(e.nativeEvent);
-    // setBottomAvailableHeight(e.nativeElement.layout.height);
+    // console.log(e.nativeEvent);
+    if (!bottomAvailableHeight) {
+      console.log(bottomAvailableHeight);
+      setBottomAvailableHeight(e.nativeEvent.layout.height);
+    }
   };
 
   return (
@@ -55,7 +60,7 @@ const TestScreen = ({route, navigation}) => {
           ]}
           pointerEvents="box-none">
           <Appbar.Content
-            title="abcdef"
+            title="Responsive Layout"
             style={{
               alignItems: 'center',
               justifyContent: 'center',
@@ -125,90 +130,116 @@ const TestScreen = ({route, navigation}) => {
           </View>
         </View>
 
-        <View style={styles.footer} onLayout={updateHeight}>
-          {/* <DataTable style={{marginTop: 0, flex: 1}}>
-            <DataTable.Header style={{height: 30, marginTop: 0}}>
-              <DataTable.Title style={{paddingVertical: 5}}>
-                Dessert
-              </DataTable.Title>
-              <DataTable.Title
-                style={{
-                  paddingVertical: 5,
-                }}
-                numeric>
-                Calories
-              </DataTable.Title>
-              <DataTable.Title style={{paddingVertical: 5}} numeric>
-                Fat
-              </DataTable.Title>
-            </DataTable.Header> */}
+        <View style={styles.footer}>
+          <DataTable style={{marginTop: 0, flex: 1, width: windowWidth}}>
+            <ScrollView
+              nestedScrollEnabled
+              horizontal
+              contentContainerStyle={{flexDirection: 'column'}}>
+              <DataTable.Header style={{height: 30, marginTop: 0}}>
+                <DataTable.Title
+                  style={{paddingVertical: 5, flex: 0, width: 100}}>
+                  Dessert
+                </DataTable.Title>
+                <DataTable.Title
+                  style={{paddingVertical: 5, flex: 0, width: 100}}
+                  numeric>
+                  Calories
+                </DataTable.Title>
+                <DataTable.Title
+                  style={{paddingVertical: 5, flex: 0, width: 100}}
+                  numeric>
+                  Fat
+                </DataTable.Title>
+                <DataTable.Title
+                  style={{paddingVertical: 5, flex: 0, width: 100}}
+                  numeric>
+                  Fat
+                </DataTable.Title>
+              </DataTable.Header>
+              <View style={{flex: 1}} onLayout={updateHeight}>
+                <ScrollView
+                  nestedScrollEnabled={true}
+                  style={{
+                    width: '95%',
+                    // marginHorizontal: 10,
+                    height: bottomAvailableHeight,
+                    backgroundColor: 'skyblue',
+                    // height: windowHeight * 0.1,
+                    // flex: 1,
+                  }}
+                  contentContainerStyle={{flexGrow: 1}}>
+                  <DataTable.Row style={{minHeight: 25}}>
+                    <DataTable.Cell>Frozen yogurt</DataTable.Cell>
+                    <DataTable.Cell numeric>159</DataTable.Cell>
+                    <DataTable.Cell numeric>6.0</DataTable.Cell>
+                    <DataTable.Cell numeric>6.0</DataTable.Cell>
+                  </DataTable.Row>
+                  <DataTable.Row style={{minHeight: 25}}>
+                    <DataTable.Cell>Ice cream sandwich</DataTable.Cell>
+                    <DataTable.Cell numeric>237</DataTable.Cell>
+                    <DataTable.Cell numeric>8.0</DataTable.Cell>
+                    <DataTable.Cell numeric>8.0</DataTable.Cell>
+                  </DataTable.Row>
+                  <DataTable.Row style={{minHeight: 25}}>
+                    <DataTable.Cell>Ice cream sandwich</DataTable.Cell>
+                    <DataTable.Cell numeric>237</DataTable.Cell>
+                    <DataTable.Cell numeric>8.0</DataTable.Cell>
+                    <DataTable.Cell numeric>8.0</DataTable.Cell>
+                  </DataTable.Row>
+                  <DataTable.Row style={{minHeight: 25}}>
+                    <DataTable.Cell>Ice cream sandwich</DataTable.Cell>
+                    <DataTable.Cell numeric>237</DataTable.Cell>
+                    <DataTable.Cell numeric>8.0</DataTable.Cell>
+                    <DataTable.Cell numeric>8.0</DataTable.Cell>
+                  </DataTable.Row>
+                  <DataTable.Row style={{minHeight: 25}}>
+                    <DataTable.Cell>Ice cream sandwich</DataTable.Cell>
+                    <DataTable.Cell numeric>237</DataTable.Cell>
+                    <DataTable.Cell numeric>8.0</DataTable.Cell>
+                    <DataTable.Cell numeric>8.0</DataTable.Cell>
+                  </DataTable.Row>
+                  <DataTable.Row style={{minHeight: 25}}>
+                    <DataTable.Cell>Ice cream sandwich</DataTable.Cell>
+                    <DataTable.Cell numeric>237</DataTable.Cell>
+                    <DataTable.Cell numeric>8.0</DataTable.Cell>
+                    <DataTable.Cell numeric>8.0</DataTable.Cell>
+                  </DataTable.Row>
+                  <DataTable.Row style={{minHeight: 25}}>
+                    <DataTable.Cell>Ice cream sandwich</DataTable.Cell>
+                    <DataTable.Cell numeric>237</DataTable.Cell>
+                    <DataTable.Cell numeric>8.0</DataTable.Cell>
+                    <DataTable.Cell numeric>8.0</DataTable.Cell>
+                  </DataTable.Row>
+                  <DataTable.Row style={{minHeight: 25}}>
+                    <DataTable.Cell>Ice cream sandwich</DataTable.Cell>
+                    <DataTable.Cell numeric>237</DataTable.Cell>
+                    <DataTable.Cell numeric>8.0</DataTable.Cell>
+                    <DataTable.Cell numeric>8.0</DataTable.Cell>
+                  </DataTable.Row>
+                  <DataTable.Row style={{minHeight: 25}}>
+                    <DataTable.Cell>Ice cream sandwich</DataTable.Cell>
+                    <DataTable.Cell numeric>237</DataTable.Cell>
+                    <DataTable.Cell numeric>8.0</DataTable.Cell>
+                    <DataTable.Cell numeric>8.0</DataTable.Cell>
+                  </DataTable.Row>
+                  <DataTable.Row style={{minHeight: 25}}>
+                    <DataTable.Cell>Ice cream sandwich</DataTable.Cell>
+                    <DataTable.Cell numeric>237</DataTable.Cell>
+                    <DataTable.Cell numeric>8.0</DataTable.Cell>
+                    <DataTable.Cell numeric>8.0</DataTable.Cell>
+                  </DataTable.Row>
+                  <DataTable.Row style={{minHeight: 25}}>
+                    <DataTable.Cell>Ice cream sandwich</DataTable.Cell>
+                    <DataTable.Cell numeric>237</DataTable.Cell>
+                    <DataTable.Cell numeric>8.0</DataTable.Cell>
+                    <DataTable.Cell numeric>8.0</DataTable.Cell>
+                  </DataTable.Row>
+                </ScrollView>
+              </View>
+            </ScrollView>
+          </DataTable>
           {/* <ScrollView
-                nestedScrollEnabled={true}
-                style={{
-                  width: '95%',
-                  marginHorizontal: 10,
-                  height: windowHeight * 0.1,
-                  flex: 1,
-                }}
-                contentContainerStyle={{flexGrow: 1}}>
-                <DataTable.Row style={{minHeight: 25}}>
-                  <DataTable.Cell>Frozen yogurt</DataTable.Cell>
-                  <DataTable.Cell numeric>159</DataTable.Cell>
-                  <DataTable.Cell numeric>6.0</DataTable.Cell>
-                </DataTable.Row>
-                <DataTable.Row style={{minHeight: 25}}>
-                  <DataTable.Cell>Ice cream sandwich</DataTable.Cell>
-                  <DataTable.Cell numeric>237</DataTable.Cell>
-                  <DataTable.Cell numeric>8.0</DataTable.Cell>
-                </DataTable.Row>
-                <DataTable.Row style={{minHeight: 25}}>
-                  <DataTable.Cell>Ice cream sandwich</DataTable.Cell>
-                  <DataTable.Cell numeric>237</DataTable.Cell>
-                  <DataTable.Cell numeric>8.0</DataTable.Cell>
-                </DataTable.Row>
-                <DataTable.Row style={{minHeight: 25}}>
-                  <DataTable.Cell>Ice cream sandwich</DataTable.Cell>
-                  <DataTable.Cell numeric>237</DataTable.Cell>
-                  <DataTable.Cell numeric>8.0</DataTable.Cell>
-                </DataTable.Row>
-                <DataTable.Row style={{minHeight: 25}}>
-                  <DataTable.Cell>Ice cream sandwich</DataTable.Cell>
-                  <DataTable.Cell numeric>237</DataTable.Cell>
-                  <DataTable.Cell numeric>8.0</DataTable.Cell>
-                </DataTable.Row>
-                <DataTable.Row style={{minHeight: 25}}>
-                  <DataTable.Cell>Ice cream sandwich</DataTable.Cell>
-                  <DataTable.Cell numeric>237</DataTable.Cell>
-                  <DataTable.Cell numeric>8.0</DataTable.Cell>
-                </DataTable.Row>
-                <DataTable.Row style={{minHeight: 25}}>
-                  <DataTable.Cell>Ice cream sandwich</DataTable.Cell>
-                  <DataTable.Cell numeric>237</DataTable.Cell>
-                  <DataTable.Cell numeric>8.0</DataTable.Cell>
-                </DataTable.Row>
-                <DataTable.Row style={{minHeight: 25}}>
-                  <DataTable.Cell>Ice cream sandwich</DataTable.Cell>
-                  <DataTable.Cell numeric>237</DataTable.Cell>
-                  <DataTable.Cell numeric>8.0</DataTable.Cell>
-                </DataTable.Row>
-                <DataTable.Row style={{minHeight: 25}}>
-                  <DataTable.Cell>Ice cream sandwich</DataTable.Cell>
-                  <DataTable.Cell numeric>237</DataTable.Cell>
-                  <DataTable.Cell numeric>8.0</DataTable.Cell>
-                </DataTable.Row>
-                <DataTable.Row style={{minHeight: 25}}>
-                  <DataTable.Cell>Ice cream sandwich</DataTable.Cell>
-                  <DataTable.Cell numeric>237</DataTable.Cell>
-                  <DataTable.Cell numeric>8.0</DataTable.Cell>
-                </DataTable.Row>
-                <DataTable.Row style={{minHeight: 25}}>
-                  <DataTable.Cell>Ice cream sandwich</DataTable.Cell>
-                  <DataTable.Cell numeric>237</DataTable.Cell>
-                  <DataTable.Cell numeric>8.0</DataTable.Cell>
-                </DataTable.Row>
-              </ScrollView> */}
-          {/* </DataTable> */}
-          <ScrollView
             style={{
               height: bottomAvailableHeight,
               // flex: 1,
@@ -245,7 +276,7 @@ const TestScreen = ({route, navigation}) => {
             <Text>abcdef</Text>
             <Text>abcdef</Text>
             <Text>abcdef</Text>
-          </ScrollView>
+          </ScrollView> */}
         </View>
         {/* <View style={styles.dummy}>
             <TextInput style={styles.input_split}></TextInput>
